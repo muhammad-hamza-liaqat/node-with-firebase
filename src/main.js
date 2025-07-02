@@ -2,10 +2,11 @@ require("dotenv").config();
 
 const express = require("express")
 const app = express()
-const db = require("./config/firebase")
+const { db } = require("./config/firebase")
 
 const requestLogger = require("./middleware/requestLogger")
 const notFoundHandler = require("./middleware/notFoundHandler")
+const { myRoutes } = require("./routes/index")
 
 const PORT = process.env.PORT || 8001
 app.use(requestLogger);
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
     res.end("Welcome to express server");
 });
 
+app.use("/api", myRoutes)
 
 app.use(notFoundHandler);
 
